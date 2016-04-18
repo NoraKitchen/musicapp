@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Itunes</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link href='https://fonts.googleapis.com/css?family=Cantarell:400,400italic' rel='stylesheet' type='text/css'>
+  </head>
+  
+  <body>
+    
+      
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="col-md-8">
+          <div class="navbar-brand hidden-xs"><span class="glyphicon glyphicon-search"></span></div>
+        
+      <form class="navbar-form navbar-left" role="search">
+        <!--DO NOT MODIFY THE ID OR ONCLICK ATTRIBUTES IN THIS FORM-->
+        <div class="form-group">
+          <input type="text" class="form-control" id="artist" placeholder="Artist Name"/>
+          <button type="button" class="btn btn-primary navbar-btn" id="get-music-button" onclick="getMusic()">Get Music</button>
+        </div>
+      </form>
+      </div>
+      
+      <div class="col-md-4 nav-text">
+        <div class="navbar-text">
+          <p>FIND <span class="text-info" style="font-size: 25px">COOL MUSIC</span> NOW</p>
+        </div>
+      </div>
+      
+      
+      </div>
+      </nav>
+      
+      <div class="container">
+      <section class="row">
+      <div class="col-md-12">
+        <ul class="list-unstyled list-inline text-center" id="song-list">
+          
+        </ul>
+        <!--<table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Album</th >
+              <th>Song</th>
+              <th>Price</th>
+              <th>Preview Song</th>
+            </tr>
+          </thead>
+          <tbody id="song-list">
+            
+            
+
+          </tbody>
+          
+        </table> -->
+      </div>
+      </section>
+      
+  </div>
+  
+  <script src="itunes-service.js"></script>
+  <script src="apps.js"></script>
+  </body>
+</html>

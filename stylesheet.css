@@ -1,0 +1,21 @@
+.nav-text {
+  font-size: 17px;
+  font-family: Cantarella;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.song-title {
+  font-size: 15px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.album-img {
+  width: 100px;
+}
+
+.song-entry {
+  width: 250px;
+  font-size: 12px;
+}
