@@ -1,68 +1,57 @@
-# musicapp
+# MusicApp
 
-##Welcome to the new and Improved Itunes!
+This small app was created two weeks into the BoiseCodeWorks Immersive Full Stack program as the first “checkpoint” test completed independently without help from teachers or aids. At this point in the curriculum, students had experience with HTML, CSS, Bootstrap, and basic Javascript.
 
-Okay well maybe its not quite there yet, that's where you come in.
+The app was initially given to students with a basic HTML form input where users could type a music artist, as well as a service that would deliver back all songs by that artist as an array of song objects from the iTunes api.
 
-###The Setup
+###Tasks
 
-You will notice a file named `itunes-service.js` This file has been setup to get information from the itunes server and return a list of songs from whatever is typed into the input field. You can rest assured that this part of the application is fully functional. 
+In this app, my job was to...
 
-You are now being tasked with handling the data that comes back from the service after clicking the `Get Music` Button. 
+1. Utilize vanilla JavaScript to display each song (and all its properties) returned from the service onto the page
+2. Utilize the Bootstrap grid and at least 2 Bootstrap components to make the page visually appealing
+3. BONUS: Play a preview of the song when the title is clicked, ensuring the song does not continue to play if another song is clicked
 
-The first thing to focus on will be adding the correct information to the screen. You will be doing this through the `drawSongs` function that has already been setup in app.js
+##Process Highlights
 
-> Notice that `drawSongs` is accepting an argument called `(songList)`
+Manipulating the DOM to add song elements to the page was a fairly straightforward process, as well as utilizing the Bootstrap grid system and a number of different components. My main hangups turned out to be choosing which bootstrap components were best to use, as well as (unsurprisingly) achieving the bonus task.
 
-> The `songList` is an `array` of `objects` where each `object` is a song as illustrated below
+###Choosing my components
+
+My initial choice to display each song was a Bootstrap table. I had recently learned about the various table classes Bootstrap offered, such as colored or zebra-stripped tables as well as the ability to make rows highlight on hover, and was eager to try putting them to use.
+
+However, after initially writing the code to create the table and dynamically add its rows, I found the table did not display nicely on a smaller window. At the time, I ended up rewriting the code to use a list of wells instead. Though this was not necessarily a bad choice, I do in retrospect wonder if simply adding a “table-responsive” class to my table would have solved the problem. I believe I was unaware of it at the time.
+
+###Making it play
+
+My first step in attempting the bonus was simply to see if I could hard-code an HTML button (which I preferred to making the title clickable) to the page and make that button play one of the music samples. The end-goal was to have the buttons dynamically added rather than hard coded, but I wanted to make sure I had the basic code right first. The process went smoothly, and my button played the URL I gave it.
+
+However, when I attempted to add the buttons dynamically for each song, my buttons did not play. I eventually realized I was running into a problem with quotation marks. 
+
+Both JavaScript and HTML use quotation marks to delineate certain items, such as a string in JavaScript (e.g. var string = “This is my beautiful string!”) or property values in HTML (e.g. href = “myUrl.html”). Sometimes, you get into situations where you want to use quotes within quotes, but that's ok—you can use double quotes for one job, and single for another ( var string = “This is my 'beautiful' string!”, or onclick=”playSong('songUrl.mp3')”.
+
+But if you're writing HTML in your JavaScript, you can get into situations where you need quotes within quotes within quotes. This was the case with my dynamically added play button.
 
 ```javascript
-songList = [{
-  title: 'string - song title',
-  albumArt: 'string - url for song album cover art',
-  artist: 'string - artistName',
-  collection: 'string - album title',
-  price: 'number - price of song',
-  preview: 'string - url will play the song'
-}]
-```
-When the user clicks the `Get Music Button` it runs a function in the `itunes-service.js` once that code is finished it will call the `drawSongs function` and pass in the list of songs requested. Thus you will not need to modify any of the code in the `itunes-service.js` or the `getMusic function` Also do not change the name of the `drawSongs function`.
-
-###Step 1 -  Where is the output? `Total Points: 10`
-
-It is your responsibility to update the `drawSongs function` so the user can actually see the data that is returned from the itunes service.
-
-There are several ways to manipulate the DOM and add these elements. Primarily all of these songs will need to be added to the page I would recommend an easy to target container such as 
-
-```html
-<ul id="song-list">
-  <!--SONGS ADDED DYNAMICALLY HERE-->
-</ul>
+songs += "<button onclick='playPreview('" + currentSong.preview + "')'>Play</button>";
 ```
 
-Requirements:
-- `5 points`: All songs are drawn to the page when the button is clicked - *(should be somewhere around 50 per search)*
-- `2.5 points`: Each search will clear the previously loaded songs from the output
-- `2.5 points`: Each property of the `song object` is rendered to the page 
+My currentSongs.preview was a url, and that url needed to be surrounded by quotes in order to work. My double and single quotes were already in use for other jobs within the string. If I tried to add more quotes, either double or single (as I did above), the code would break.
 
-###Step 2 - Prettify with Bootstrap `Total Points: 10`
+My solution at the time makes me giggle a little today. I took my url, currentSong.preview, and saved it to a variable (songURLQuoted) with quotes added around it. Then I used songURLQuoted in the code to create the button.
 
-Styling is a hard area to grade so at a bare minimum you will need to show your understanding of bootstrap classes. The following image is accomplished purely with built in bootstrap classes. Feel free to customize and go crazy with some awesome styles but make it look good and ensure that you are using the grid system so the results are responsive. Also be sure to use at least 2 bootstrap components
+```javascript
+var songURLQuoted = '"' + currentSong.preview + '"';
 
-<div>
-  <img class="img-responsive" src="https://bcw.blob.core.windows.net/public/img/mytunes.jpg" />
-</div>
+songs += "<button onclick='playPreview(" + songURLQuoted + ")'>Play</button>";
+```
 
-Requirements:
-- `5 points`: Utilize bootstrap 12 column grid system
-- `5 points`: Utilize at least 2 bootstrap components
+I give myself 5 points ingenuity, and 10 points abject shame for not thinking of what was probably the better way. The better way, of course, being escape characters.
 
+```javascript
+songs += "<button onclick='playPreview(\”" + currentSong.preview + "\”)'>Play</button>";
+```
 
-###BONUS - Preview the Songs `Total Points: 5`
-Requirements: 
-- Clicking on the title should play the 30 second preview
-- The preview must play without opening a new browser window
-- Clicking play on a title while another song is already playing will stop the previous song and start the new one
+Inserting a backslash before a quote tells JavaScript to essentially ignore the usual role of the quote and just take it as part of the string. But hindsight (especially after 3 months of a dev bootcamp) is 20/20. We live, we learn, and write really weird code in the meantime.
 
-###Finished?
-When You are finished please slack the url for your github repo to me with in a DM. You are free to work on this however you like but ultimately it needs to be added to your github.
+###To see the original instructions for this activity, visit README2.md
