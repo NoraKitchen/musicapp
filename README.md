@@ -32,25 +32,25 @@ Both JavaScript and HTML use quotation marks to delineate certain items, such as
 
 But if you're writing HTML in your JavaScript, you can get into situations where you need quotes within quotes within quotes. This was the case with my dynamically added play button.
 
-'''javascript
+```javascript
 songs += "<button onclick='playPreview('" + currentSong.preview + "')'>Play</button>";
-'''
+```
 
 My currentSongs.preview was a url, and that url needed to be surrounded by quotes in order to work. My double and single quotes were already in use for other jobs within the string. If I tried to add more quotes, either double or single (as I did above), the code would break.
 
 My solution at the time makes me giggle a little today. I took my url, currentSong.preview, and saved it to a variable (songURLQuoted) with quotes added around it. Then I used songURLQuoted in the code to create the button.
 
-'''javascript
+```javascript
 var songURLQuoted = '"' + currentSong.preview + '"';
 
 songs += "<button onclick='playPreview(" + songURLQuoted + ")'>Play</button>";
-'''
+```
 
 I give myself 5 points ingenuity, and 10 points abject shame for not thinking of what was probably the better way. The better way, of course, being escape characters.
 
-'''javascript
+```javascript
 songs += "<button onclick='playPreview(\”" + currentSong.preview + "\”)'>Play</button>";
-'''
+```
 
 Inserting a backslash before a quote tells JavaScript to essentially ignore the usual role of the quote and just take it as part of the string. But hindsight (especially after 3 months of a dev bootcamp) is 20/20. We live, we learn, and write really weird code in the meantime.
 
